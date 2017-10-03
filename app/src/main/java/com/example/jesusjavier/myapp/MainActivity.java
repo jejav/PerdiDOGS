@@ -101,10 +101,11 @@ public class MainActivity extends AppCompatActivity {
                 prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
                 editor=prefs.edit();
                 editor.putInt("optLog",0);
+                editor.commit();
+
 
                 intent = new Intent(MainActivity.this,LoginActivity.class);
-                prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
-                editor=prefs.edit();
+
 
                 switch (optLog){
                     case 1:
