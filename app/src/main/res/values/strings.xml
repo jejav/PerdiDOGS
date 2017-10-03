@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">PerdiDogs</string>
+    <string name="correo">Correo Electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="miperfil">Mi Perfil</string>
+    <string name="cerrarsesion">Cerrar sesión</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="Iniciar">Iniciar sesión</string>
+    <string name="registrar" >Registrarse</string>
+    <string name="facebook_app_id">152213875367886</string>
+    <string name="fb_login_protocol_scheme">fb152213875367886</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cambiar">Cambiar</string>
+    <string name="title_activity_vehiculos">VehiculosActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="usuario">Usuario:</string>
+    <string name="logwith">Datos de Autenticación</string>
+    <string name="mail">Email:</string>
+    <string name="repcontraseña">Repetir contraseña</string>
+    <string name="registro">Registrar</string>
+    <string name="principal">Principal</string>
+
+</resources>
