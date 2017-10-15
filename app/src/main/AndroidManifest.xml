@@ -15,32 +15,42 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".MainActivity" android:label="PerdiDOGS" />
         <activity
-            android:label="Login"
+            android:name=".MainActivity"
+            android:label="PerdiDOGS" />
+        <activity
             android:name=".LoginActivity"
+            android:label="Login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:label="Registro"
             android:name=".RegistroActivity"
+            android:label="Registro"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            </activity>/
-        <activity android:name=".PerfilActivity" android:label="Perfil" />
-        <activity android:name=".InfoActivity"/>
+        </activity>
+        /
+        <activity
+            android:name=".PerfilActivity"
+            android:label="Perfil" />
+        <activity android:name=".InfoActivity" />
         <activity
             android:name=".VehiculosActivity"
             android:label="@string/title_activity_vehiculos"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NavyActivity"
+            android:label="@string/title_activity_navy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BottomNavActivity"
+            android:label="@string/title_activity_bottom_nav"></activity>
     </application>
 
 </manifest>

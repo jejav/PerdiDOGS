@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 //fotoUrl="https://1.bp.blogspot.com/-pNIe14h4NC0/VZpa_-UOD0I/AAAAAAAAARA/cfDik7qkFvg/w1200-h630-p-k-no-nu/DBS.jpg";
                 //username="Cualquiervaina";
 
-                goMainActivity();
+               // goMainActivity();
 
             }
 
