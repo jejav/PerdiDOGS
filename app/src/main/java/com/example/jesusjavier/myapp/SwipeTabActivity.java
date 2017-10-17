@@ -11,15 +11,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-public class VehiculosActivity extends AppCompatActivity {
+public class SwipeTabActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -93,7 +89,7 @@ public class VehiculosActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -102,9 +98,10 @@ public class VehiculosActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:return new AutoFragment();
-                case 1: return new MotoFragment();
-                case 2:return new AutoFragment();
+                case 0:return new ScannerFragment();
+                case 1: return new ScannerFragment();
+                case 2:return new UbicacionFragment();
+                case 3:return new PerfilFragment();
                 default: return null;
 
             }
@@ -115,19 +112,21 @@ public class VehiculosActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Autos";
+                    return "Scanner";
                 case 1:
-                    return "Motos";
+                    return "Ver QR";
                 case 2:
-                    return "Autosdos";
+                    return "Ubicacion";
+                case 3:
+                    return "perfil";
             }
             return null;
         }

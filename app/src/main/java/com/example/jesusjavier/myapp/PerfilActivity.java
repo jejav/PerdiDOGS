@@ -117,7 +117,7 @@ public class PerfilActivity extends AppCompatActivity {
                 break;
 
             case R.id.cerrar:
-                prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
+                prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
                 editor=prefs.edit();
                 editor.putInt("optLog",0);
                 editor.commit();

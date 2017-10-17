@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(optlog==0)
                        intent= new Intent(SplashActivity.this,LoginActivity.class);
                 else
-                    intent= new Intent(SplashActivity.this,MainActivity.class);
+                    intent= new Intent(SplashActivity.this,NavyActivity.class);
 
                 startActivity(intent);
                 finish();

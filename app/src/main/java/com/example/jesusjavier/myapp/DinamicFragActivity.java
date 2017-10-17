@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class InfoActivity extends AppCompatActivity {
+public class DinamicFragActivity extends AppCompatActivity {
 
     FragmentManager fm;
     FragmentTransaction ft;
@@ -14,19 +14,19 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_dinamic_frag);
 
         fm=getSupportFragmentManager();
         ft=fm.beginTransaction();
 
-        AutoFragment fragment =new AutoFragment();
+        ScannerFragment fragment =new ScannerFragment();
         ft.add(R.id.frame,fragment).commit();
     }
 
     public void Cambiar(View view) {
         ft=fm.beginTransaction();
 
-        MotoFragment fragment =new MotoFragment();
+        UbicacionFragment fragment =new UbicacionFragment();
         ft.replace(R.id.frame,fragment).commit();
 
     }

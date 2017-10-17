@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:gravity="center"
                 android:textColorLink="@color/blue"
                 android:textColor="@color/blue"
                 android:id="@+id/btnregistrar"

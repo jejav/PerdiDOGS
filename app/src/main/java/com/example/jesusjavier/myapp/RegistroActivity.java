@@ -1,6 +1,7 @@
 package com.example.jesusjavier.myapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,9 @@ public class RegistroActivity extends AppCompatActivity {
      String correo, contrasena,contrasenaRep;
      EditText eCorreo, eContrasena,eRepcontrasena;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,16 @@ public class RegistroActivity extends AppCompatActivity {
         eContrasena=(EditText)findViewById(R.id.eContrasena);
         eRepcontrasena=(EditText)findViewById(R.id.eRepcontrasena);
 
+    }
+
+    @Override
+    protected void onResume() {
+        prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+
+        //correo=prefs.getString("correo","null@mail.com");
+        //contrasena=prefs.getString("contrasena","null--");
+
+        super.onResume();
     }
 
     private boolean validarEmail(String email) {
@@ -60,8 +74,14 @@ public class RegistroActivity extends AppCompatActivity {
         }else {
             //Validaciones
             Intent intent =new Intent();
-            intent.putExtra("CorreoRe",correo);
-            intent.putExtra("ContrasenaRe",contrasena);
+            prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+            editor= prefs.edit();
+            editor.putString("CorreoRe",correo);
+            editor.putString("ContrasenaRe",contrasena);
+            editor.commit();
+            Toast.makeText(getApplicationContext(),"Cuenta creada con éxito",Toast.LENGTH_SHORT).show();
+          //  intent.putExtra("CorreoRe",correo);
+            //intent.putExtra("ContrasenaRe",contrasena);
             setResult(RESULT_OK,intent);
             finish();
         }

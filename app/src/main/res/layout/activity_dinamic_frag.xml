@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.jesusjavier.myapp.InfoActivity">
+    tools:context="com.example.jesusjavier.myapp.DinamicFragActivity">
 
 <Button
     android:onClick="Cambiar"

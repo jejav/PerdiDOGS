@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,11 +21,9 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -182,6 +179,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 /////////////////////////////////////////end FB log////////////////////////////////////////////////////////
 
+
+    @Override
+    protected void onResume() {
+        prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+
+
+        optLog=prefs.getInt("optlog",3);
+        fotoUrl=prefs.getString("fotoperfil","");
+        correoUser=prefs.getString("CorreoRe","");
+        passUser=prefs.getString("ContrasenaRe","");
+
+
+        super.onResume();
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, 8765);
@@ -198,8 +210,8 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode ==1234 && resultCode ==RESULT_OK){
             //correoR = data.getExtras().getString("correo");
             //contraseñaR = data.getExtras().getString("contraseña");
-            correoUser = data.getExtras().getString("CorreoRe");
-            passUser = data.getExtras().getString("ContrasenaRe");
+           // correoUser = data.getExtras().getString("CorreoRe");
+            //passUser = data.getExtras().getString("ContrasenaRe");
            // Log.d("correo",correoR);
             //Log.d("contraseña",contraseñaR);
 
@@ -248,7 +260,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
         if( (correoCom.equals(correoUser)) &&  (contraseñaCom.equals(passUser)) ){
             optLog = 2;
             goMainActivity();
@@ -261,33 +272,59 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goMainActivity() {
-
-        prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
-        editor=prefs.edit();
-        editor.putInt("optLog",optLog);
+        prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+        editor= prefs.edit();
+        editor.putInt("optlog",optLog);
         editor.commit();
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        if (optLog == 1) { //facebook
+ /*       prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
+        editor=prefs.edit();
+        editor.putInt("optLog",optLog);
+        editor.commit();*/
 
+
+        ////Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, NavyActivity.class);
+
+
+        if (optLog == 1) { //facebook
+            editor.putString("correo",correoR);
+            editor.putString("usuario",username);
+            editor.putString("fotoperfil",fotoUrl);
+            editor.putInt("optlog",optLog);
+            editor.commit();
 
             //extraigo el correo y la foto
             //fotoUrl="";//+profile.getProfilePictureUri(450,450).toString();
-            intent.putExtra("correo",correoR);
+/*            intent.putExtra("correo",correoR);
             intent.putExtra("optlog",optLog);
             intent.putExtra("usuario", username);
-            intent.putExtra("fotoperfil", fotoUrl);
+            intent.putExtra("fotoperfil", fotoUrl);*/
+
 
         } else if (optLog == 2) {//correo y contraseña Login Propio
-            intent.putExtra("optlog",optLog);
+
+            editor.putString("correo",correoUser);
+            editor.putString("contrasena",passUser);
+            editor.putInt("optlog",optLog);
+            editor.commit();
+
+/*            intent.putExtra("optlog",optLog);
             intent.putExtra("correo", correoUser);
-            intent.putExtra("contrasena", passUser);
+            intent.putExtra("contrasena", passUser);*/
 
         } else if (optLog == 3) { //login con google
+            editor.putString("correo",correoG);
+            editor.putString("usuario",nombreG);
+            editor.putString("fotoperfil",urlfotoG);
+            editor.putInt("optlog",optLog);
+            editor.commit();
+
+/*
             intent.putExtra("optlog",optLog);
             intent.putExtra("correo",correoG);
             intent.putExtra("usuario",nombreG);
-            intent.putExtra("fotoperfil",urlfotoG);
+            intent.putExtra("fotoperfil",urlfotoG);*/
 
         }
         startActivity(intent);
