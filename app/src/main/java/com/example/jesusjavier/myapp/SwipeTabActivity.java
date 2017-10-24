@@ -1,5 +1,6 @@
 package com.example.jesusjavier.myapp;
 
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,8 @@ public class SwipeTabActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    static BottomNavigationView bottomNavigationView;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -43,13 +46,15 @@ public class SwipeTabActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        bottomNavigationView=(BottomNavigationView)findViewById(R.id.navigation);
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +62,7 @@ public class SwipeTabActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
     }
 
@@ -98,11 +103,21 @@ public class SwipeTabActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:return new ScannerFragment();
-                case 1: return new ScannerFragment();
-                case 2:return new UbicacionFragment();
-                case 3:return new PerfilFragment();
-                default: return null;
+                case 0:
+                    //bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+                    return new PrincipalFragment();
+                case 1:
+                    //bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
+                    return new ScannerFragment();
+                case 2:
+                   // bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
+                    return new WatchFragment();
+                case 3:
+                    return new UbicacionFragment();
+                case 4:
+                    return new PerfilFragment();
+                default:
+                    return null;
 
             }
             // getItem is called to instantiate the fragment for the given page.
@@ -113,20 +128,17 @@ public class SwipeTabActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 4 total pages.
-            return 4;
+            return 5;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
-                    return "Scanner";
-                case 1:
-                    return "Ver QR";
-                case 2:
-                    return "Ubicacion";
-                case 3:
-                    return "perfil";
+                case 0:return "Home";
+                case 1:return "Scanner";
+                case 2:return "Ver QR";
+                case 3:return "Ubicacion";
+                case 4:return "perfil";
             }
             return null;
         }

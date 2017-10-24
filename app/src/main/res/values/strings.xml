@@ -38,5 +38,7 @@
     <string name="userperfil">Usuario</string>
     <string name="ubicacion">Ubicación</string>
     <string name="nombreUsuario">Usuario</string>
+    <string name="verQr">Ver QR</string>
+    <string name="perfil">Perfil</string>
 
 </resources>

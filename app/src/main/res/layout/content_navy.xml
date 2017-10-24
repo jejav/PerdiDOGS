@@ -10,34 +10,48 @@
     tools:context="com.example.jesusjavier.myapp.NavyActivity"
     tools:showIn="@layout/app_bar_navy">
 
-<LinearLayout
-    android:orientation="vertical"
+
+
+<FrameLayout
+    android:id="@+id/maincontainer"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="9">
+    android:layout_weight="9"
+    >
 
-    <include
 
-        layout="@layout/activity_vehiculos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        />
-</LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <include
-            layout="@layout/activity_bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        >
 
+        <include
+
+            layout="@layout/activity_vehiculos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
     </LinearLayout>
 
 
 
+</FrameLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <include
+                        layout="@layout/activity_bottom_nav"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
 
 
 

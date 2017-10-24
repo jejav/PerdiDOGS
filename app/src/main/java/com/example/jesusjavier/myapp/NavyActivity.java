@@ -1,5 +1,6 @@
 package com.example.jesusjavier.myapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +24,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.squareup.picasso.Picasso;
 
 public class NavyActivity extends AppCompatActivity
@@ -38,16 +47,14 @@ public class NavyActivity extends AppCompatActivity
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-
      String fotoUrl,correo,usuario;
+    int optLog;
 
+    GoogleApiClient mGoogleApiClient;
 
     private SwipeTabActivity.SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
-
-
-
+     BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -57,14 +64,14 @@ public class NavyActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,12 +93,31 @@ public class NavyActivity extends AppCompatActivity
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        bottomNavigationView=(BottomNavigationView)findViewById(R.id.navigation);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         fm=getSupportFragmentManager();
         ft=fm.beginTransaction();
+
+
+
+        ///GOOGLE///
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(getApplicationContext(), "Error en login",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
 
     }
@@ -103,6 +129,7 @@ public class NavyActivity extends AppCompatActivity
         fotoUrl=prefs.getString("fotoperfil","");
         correo=prefs.getString("correo","null@mail.com");
         usuario=prefs.getString("usuario","NULL");
+        optLog=prefs.getInt("optlog",4);
 
         super.onResume();
     }
@@ -116,6 +143,8 @@ public class NavyActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,9 +166,10 @@ public class NavyActivity extends AppCompatActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
         return true;
     }
+
+
 
 
     private void loadImageFromUrl(String fotoperfil) {
@@ -164,16 +194,19 @@ public class NavyActivity extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mViewPager.setCurrentItem(0);
+
                     //mTextMessage.setText(R.string.title_home);
                    // ft=fm.beginTransaction();
 
                     return true;
                 case R.id.navigation_dashboard:
                     mViewPager.setCurrentItem(1);
+
                     //mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
                     mViewPager.setCurrentItem(2);
+
                     //mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
@@ -181,10 +214,6 @@ public class NavyActivity extends AppCompatActivity
         }
 
     };
-
-
-
-
 
 
     @Override
@@ -196,7 +225,42 @@ public class NavyActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+            editor=prefs.edit();
+            editor.putInt("optLog",0);
+            editor.commit();
+
+            Intent intent = new Intent(NavyActivity.this,LoginActivity.class);
+
+            switch (optLog) {
+                case 1:
+                    LoginManager.getInstance().logOut();
+                    break;
+                case 2:
+                    /*intent.putExtra("optlog",optLog);
+                    intent.putExtra("CorreoRe",correo);
+                    intent.putExtra("ContrasenaRe",contraseñaR);*/
+                    break;
+
+                case 3:
+
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                            new ResultCallback<Status>() {
+                                @Override
+                                public void onResult(Status status) {
+                                    // ...
+                                }
+                            });
+
+                    break;
+
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+
+                //return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -211,21 +275,30 @@ public class NavyActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-            mViewPager.setCurrentItem(0);
+            mViewPager.setCurrentItem(1);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
 
 
         } else if (id == R.id.nav_gallery) {
-            mViewPager.setCurrentItem(1);
+            mViewPager.setCurrentItem(2);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
 
         } else if (id == R.id.nav_slideshow) {
-            mViewPager.setCurrentItem(2);
-
+            mViewPager.setCurrentItem(3);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
 
         } else if (id == R.id.nav_manage) {
+            /*Intent intent=new Intent(NavyActivity.this,Perfiles_Activity.class);
+            startActivity(intent);*/
 
         } else if (id == R.id.nav_share) {
 
+
+
+
         } else if (id == R.id.nav_send) {
+
 
         }
 
@@ -241,16 +314,23 @@ public class NavyActivity extends AppCompatActivity
      */
     public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        //// BottomNavigationView bottomNavigationView;
+
+
         public SectionsPagerAdapter(FragmentManager fm) {
+
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
+
             switch (position) {
-                case 0:return new ScannerFragment();
-                case 1: return new UbicacionFragment();
-                case 2:return new ScannerFragment();
+                case 0:return new PrincipalFragment();
+                case 1:return new ScannerFragment();
+                case 2:return new UbicacionFragment();
+                case 3:return new ScannerFragment();
+                case 4:return new PerfilFragment();
                 default: return null;
 
             }
@@ -262,20 +342,17 @@ public class NavyActivity extends AppCompatActivity
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 5;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
-                    return "Scanner";
-                case 1:
-                    return "Ver QR";
-                case 2:
-                    return "Ubicacion";
-                case 3:
-                    return "perfil";
+                case 0:return "Home";
+                case 1:return "Scanner";
+                case 2:return "Ver QR";
+                case 3:return "Ubicacion";
+                case 4:return "perfil";
             }
             return null;
         }
