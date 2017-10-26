@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/camera"
+            android:icon="@drawable/homebtn"
             android:title="@string/escanear" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/qricon"
+            android:icon="@drawable/face"
             android:title="@string/generar" />
         <item
             android:id="@+id/nav_slideshow"
@@ -16,6 +16,8 @@
             android:title="@string/ver" />
 
     </group>
+
+    <!--
 
     <item android:title="@string/information">
         <menu>
@@ -34,5 +36,7 @@
                 android:title="@string/ubicacion" />
         </menu>
     </item>
+
+    -->
 
 </menu>

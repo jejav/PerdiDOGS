@@ -16,9 +16,9 @@
     android:icon="@drawable/locate"
     android:title="@string/ubicacion" />
 
-    <item
+   <!-- <item
         android:id="@+id/navigation_perfil"
         android:icon="@drawable/face"
-        android:title="@string/perfil" />
+        android:title="@string/perfil" />-->
 
 </menu>

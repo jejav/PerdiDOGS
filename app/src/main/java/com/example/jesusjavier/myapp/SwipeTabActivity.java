@@ -115,7 +115,8 @@ public class SwipeTabActivity extends AppCompatActivity {
                 case 3:
                     return new UbicacionFragment();
                 case 4:
-                    return new PerfilFragment();
+                    return new Perfiles();
+                    //return new PerfilFragment();
                 default:
                     return null;
 

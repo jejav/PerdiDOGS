@@ -48,14 +48,9 @@ public class NavyActivity extends AppCompatActivity
     SharedPreferences.Editor editor;
 
      String fotoUrl,correo,usuario;
-    int optLog;
+     int optLog;
 
     GoogleApiClient mGoogleApiClient;
-
-    private SwipeTabActivity.SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-     BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,25 +77,12 @@ public class NavyActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //////////////////////////////////////////NUevo777777777777777777777
-
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SwipeTabActivity.SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        bottomNavigationView=(BottomNavigationView)findViewById(R.id.navigation);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
 
         fm=getSupportFragmentManager();
         ft=fm.beginTransaction();
 
+        VentanaPrincipal fragment =new VentanaPrincipal();
+        ft.replace(R.id.maincontainer,fragment).commit();
 
 
         ///GOOGLE///
@@ -129,7 +111,7 @@ public class NavyActivity extends AppCompatActivity
         fotoUrl=prefs.getString("fotoperfil","");
         correo=prefs.getString("correo","null@mail.com");
         usuario=prefs.getString("usuario","NULL");
-        optLog=prefs.getInt("optlog",4);
+        optLog=prefs.getInt("optlog",0);
 
         super.onResume();
     }
@@ -143,13 +125,10 @@ public class NavyActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navy, menu);
+       // getMenuInflater().inflate(R.menu.navy, menu);
         //return true;
 
         /// nuevo
@@ -162,14 +141,12 @@ public class NavyActivity extends AppCompatActivity
         userView.setText(correo);
         loadImageFromUrl(fotoUrl);
         //////NUevo Bottom///////
-        //mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         return true;
     }
-
-
 
 
     private void loadImageFromUrl(String fotoperfil) {
@@ -186,34 +163,6 @@ public class NavyActivity extends AppCompatActivity
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mViewPager.setCurrentItem(0);
-
-                    //mTextMessage.setText(R.string.title_home);
-                   // ft=fm.beginTransaction();
-
-                    return true;
-                case R.id.navigation_dashboard:
-                    mViewPager.setCurrentItem(1);
-
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mViewPager.setCurrentItem(2);
-
-                    //mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-
-    };
 
 
     @Override
@@ -274,90 +223,51 @@ public class NavyActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-            mViewPager.setCurrentItem(1);
-            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+            VentanaPrincipal fragment =new VentanaPrincipal();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment).commit();
 
+           // mViewPager.setCurrentItem(1);
+           // bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
 
         } else if (id == R.id.nav_gallery) {
-            mViewPager.setCurrentItem(2);
-            bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
+            Perfiles fragment2 =new Perfiles();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment2).commit();
+
+           // mViewPager.setCurrentItem(2);
+            //bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
+
 
         } else if (id == R.id.nav_slideshow) {
-            mViewPager.setCurrentItem(3);
-            bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
+            Bottom_Fragment fragment =new Bottom_Fragment();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment).commit();
+           // bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
 
-        } else if (id == R.id.nav_manage) {
-            /*Intent intent=new Intent(NavyActivity.this,Perfiles_Activity.class);
-            startActivity(intent);*/
+
+        }
+        /*
+
+        else if (id == R.id.nav_manage) {
+
+
+
 
         } else if (id == R.id.nav_share) {
-
 
 
 
         } else if (id == R.id.nav_send) {
 
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    ///////NUEVO ////////////////////////
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        //// BottomNavigationView bottomNavigationView;
-
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            switch (position) {
-                case 0:return new PrincipalFragment();
-                case 1:return new ScannerFragment();
-                case 2:return new UbicacionFragment();
-                case 3:return new ScannerFragment();
-                case 4:return new PerfilFragment();
-                default: return null;
-
-            }
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 5;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:return "Home";
-                case 1:return "Scanner";
-                case 2:return "Ver QR";
-                case 3:return "Ubicacion";
-                case 4:return "perfil";
-            }
-            return null;
-        }
-    }
-
 
 
 

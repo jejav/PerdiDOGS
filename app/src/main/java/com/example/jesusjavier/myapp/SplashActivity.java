@@ -22,8 +22,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
-        final int optlog=prefs.getInt("optLog",0);
+        prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
+        final int optlog=prefs.getInt("optlog",0);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -44,6 +44,6 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         Timer timer=new Timer();
-        timer.schedule(task,1000);
+        timer.schedule(task,2000);
     }
 }

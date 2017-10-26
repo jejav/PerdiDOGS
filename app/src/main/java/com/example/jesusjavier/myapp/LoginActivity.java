@@ -277,15 +277,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putInt("optlog",optLog);
         editor.commit();
 
- /*       prefs=getSharedPreferences("Mis Preferencias",MODE_PRIVATE);
-        editor=prefs.edit();
-        editor.putInt("optLog",optLog);
-        editor.commit();*/
-
-
         ////Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         Intent intent = new Intent(LoginActivity.this, NavyActivity.class);
-
 
         if (optLog == 1) { //facebook
             editor.putString("correo",correoR);
@@ -294,14 +287,6 @@ public class LoginActivity extends AppCompatActivity {
             editor.putInt("optlog",optLog);
             editor.commit();
 
-            //extraigo el correo y la foto
-            //fotoUrl="";//+profile.getProfilePictureUri(450,450).toString();
-/*            intent.putExtra("correo",correoR);
-            intent.putExtra("optlog",optLog);
-            intent.putExtra("usuario", username);
-            intent.putExtra("fotoperfil", fotoUrl);*/
-
-
         } else if (optLog == 2) {//correo y contraseña Login Propio
 
             editor.putString("correo",correoUser);
@@ -309,22 +294,12 @@ public class LoginActivity extends AppCompatActivity {
             editor.putInt("optlog",optLog);
             editor.commit();
 
-/*            intent.putExtra("optlog",optLog);
-            intent.putExtra("correo", correoUser);
-            intent.putExtra("contrasena", passUser);*/
-
         } else if (optLog == 3) { //login con google
             editor.putString("correo",correoG);
             editor.putString("usuario",nombreG);
             editor.putString("fotoperfil",urlfotoG);
             editor.putInt("optlog",optLog);
             editor.commit();
-
-/*
-            intent.putExtra("optlog",optLog);
-            intent.putExtra("correo",correoG);
-            intent.putExtra("usuario",nombreG);
-            intent.putExtra("fotoperfil",urlfotoG);*/
 
         }
         startActivity(intent);

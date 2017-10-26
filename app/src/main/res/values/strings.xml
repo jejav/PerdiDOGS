@@ -30,9 +30,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="escanear">Escanear QR</string>
-    <string name="generar">Generar QR</string>
-    <string name="ver">Ver QR</string>
+    <string name="escanear">Principal</string>
+    <string name="generar">Perfiles</string>
+    <string name="ver">Bottom Tab</string>
     <string name="petperfil">PET Perfil</string>
     <string name="information">Información</string>
     <string name="userperfil">Usuario</string>
