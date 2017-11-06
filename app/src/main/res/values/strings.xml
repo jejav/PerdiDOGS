@@ -31,7 +31,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="escanear">Principal</string>
-    <string name="generar">Perfiles</string>
+    <string name="generar">Generar QR</string>
     <string name="ver">Bottom Tab</string>
     <string name="petperfil">PET Perfil</string>
     <string name="information">Información</string>
@@ -40,5 +40,10 @@
     <string name="nombreUsuario">Usuario</string>
     <string name="verQr">Ver QR</string>
     <string name="perfil">Perfil</string>
+    <string name="nombreMascota">Nombre</string>
+    <string name="raza">Raza</string>
+    <string name="color">Color</string>
+    <string name="perdidas">Pérdidas</string>
+    <string name="crearU">Crear Usuario</string>
 
 </resources>

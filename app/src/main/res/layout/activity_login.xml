@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -22,54 +22,11 @@
                     android:layout_height="match_parent"
                     />
 
-
             </LinearLayout>
 
 
         <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <EditText
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:hint="@string/correo"
-                android:id="@+id/eCorreo" />
-
-            <EditText
-                android:inputType="textWebPassword"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:hint="@string/contraseña"
-                android:id="@+id/eContrasena" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Iniciar"
-                    android:onClick="Iniciar"
-                    android:id="@+id/eIniciar" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
@@ -89,23 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:gravity="center"
-                android:textColorLink="@color/blue"
-                android:textColor="@color/blue"
-                android:id="@+id/btnregistrar"
-                android:layout_marginLeft="10dp"
-                android:textSize="20sp"
-                android:autoLink="all"
-                android:linksClickable="true"
-                android:clickable="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="registrarse"
-                android:text="@string/registrar" />
+
 
             </LinearLayout>
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

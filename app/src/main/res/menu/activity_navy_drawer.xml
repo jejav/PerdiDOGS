@@ -8,16 +8,15 @@
             android:title="@string/escanear" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/face"
-            android:title="@string/generar" />
+            android:icon="@drawable/watch"
+            android:title="@string/verQr" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/watch"
-            android:title="@string/ver" />
+            android:icon="@drawable/qricon"
+            android:title="@string/generar" />
 
     </group>
 
-    <!--
 
     <item android:title="@string/information">
         <menu>
@@ -37,6 +36,6 @@
         </menu>
     </item>
 
-    -->
+
 
 </menu>

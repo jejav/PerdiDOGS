@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.jesusjavier.myapp.SwipeTabActivity">
     <item
-        android:id="@+id/action_settings"
+    android:id="@+id/action_settings"
+    android:orderInCategory="100"
+    android:title="@string/cerrarsesion"
+    app:showAsAction="never" />
+    <item
+        android:id="@+id/crearuser"
         android:orderInCategory="100"
-        android:title="@string/cerrarsesion"
+        android:title="@string/crearU"
         app:showAsAction="never" />
 </menu>

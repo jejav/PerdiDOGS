@@ -33,6 +33,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 public class NavyActivity extends AppCompatActivity
@@ -40,17 +44,18 @@ public class NavyActivity extends AppCompatActivity
 
     FragmentManager fm;
     FragmentTransaction ft;
-
     ImageView userImageView;
     TextView userView,correoView;
-
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-
-     String fotoUrl,correo,usuario;
-     int optLog;
-
+    String fotoUrl,correo,usuario;
+    int optLog;
     GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    DatabaseReference myRef;
+    FirebaseDatabase database;
+    FirebaseUser currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +82,11 @@ public class NavyActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         fm=getSupportFragmentManager();
         ft=fm.beginTransaction();
 
-        VentanaPrincipal fragment =new VentanaPrincipal();
+        PrincipalFragment fragment =new PrincipalFragment();
         ft.replace(R.id.maincontainer,fragment).commit();
-
 
         ///GOOGLE///
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -100,7 +103,10 @@ public class NavyActivity extends AppCompatActivity
                 } /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        ///FIREBASE
+        firebaseAuth =FirebaseAuth.getInstance();
 
+        database=FirebaseDatabase.getInstance();
 
     }
 
@@ -127,27 +133,15 @@ public class NavyActivity extends AppCompatActivity
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.navy, menu);
-        //return true;
-
-        /// nuevo
         getMenuInflater().inflate(R.menu.menu_vehiculos, menu);
-
         userImageView=(ImageView)findViewById(R.id.userImageView);
         userView=(TextView) findViewById(R.id.userView);
         correoView=(TextView) findViewById(R.id.correoView);
         correoView.setText(usuario);
         userView.setText(correo);
         loadImageFromUrl(fotoUrl);
-        //////NUevo Bottom///////
-
-        //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         return true;
     }
-
 
     private void loadImageFromUrl(String fotoperfil) {
         Picasso.with(this).load(fotoperfil).placeholder(R.mipmap.ic_launcher)
@@ -160,10 +154,6 @@ public class NavyActivity extends AppCompatActivity
                     }
                 });
     }
-
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -183,12 +173,12 @@ public class NavyActivity extends AppCompatActivity
 
             switch (optLog) {
                 case 1:
+                    
                     LoginManager.getInstance().logOut();
+                    FirebaseAuth.getInstance().signOut();
                     break;
                 case 2:
-                    /*intent.putExtra("optlog",optLog);
-                    intent.putExtra("CorreoRe",correo);
-                    intent.putExtra("ContrasenaRe",contraseñaR);*/
+
                     break;
 
                 case 3:
@@ -200,6 +190,7 @@ public class NavyActivity extends AppCompatActivity
                                     // ...
                                 }
                             });
+                    FirebaseAuth.getInstance().signOut();
 
                     break;
 
@@ -209,6 +200,11 @@ public class NavyActivity extends AppCompatActivity
             finish();
 
                 //return true;
+
+        }
+
+        else if(id==R.id.crearuser){
+            makeUser();
 
         }
 
@@ -223,52 +219,54 @@ public class NavyActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_camera) {
-            VentanaPrincipal fragment =new VentanaPrincipal();
+            PrincipalFragment fragment =new PrincipalFragment();
             ft=fm.beginTransaction();
             ft.replace(R.id.maincontainer,fragment).commit();
 
-           // mViewPager.setCurrentItem(1);
-           // bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-
-
         } else if (id == R.id.nav_gallery) {
-            Perfiles fragment2 =new Perfiles();
+/*            Perfiles fragment2 =new Perfiles();
             ft=fm.beginTransaction();
-            ft.replace(R.id.maincontainer,fragment2).commit();
-
-           // mViewPager.setCurrentItem(2);
-            //bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
+            ft.replace(R.id.maincontainer,fragment2).commit();*/
 
 
         } else if (id == R.id.nav_slideshow) {
-            Bottom_Fragment fragment =new Bottom_Fragment();
+/*            Bottom_Fragment fragment =new Bottom_Fragment();
             ft=fm.beginTransaction();
-            ft.replace(R.id.maincontainer,fragment).commit();
-           // bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
-
-
+            ft.replace(R.id.maincontainer,fragment).commit();*/
         }
-        /*
 
         else if (id == R.id.nav_manage) {
-
-
+            Swipefrag2 fragment =new Swipefrag2();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment).commit();
 
 
         } else if (id == R.id.nav_share) {
 
-
+            PerfilFragment fragment =new PerfilFragment();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment).commit();
 
         } else if (id == R.id.nav_send) {
-
-
-        }*/
+            UbicacionFragment fragment =new UbicacionFragment();
+            ft=fm.beginTransaction();
+            ft.replace(R.id.maincontainer,fragment).commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    public void makeUser(){
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        Animal animal=new Animal(R.drawable.logo,"Null","Null","Null",usuario,correo);
+        myRef=database.getReference("users").child(""+currentFirebaseUser.getUid());
+        myRef.setValue(animal);
 
 
+
+
+    }
 }
