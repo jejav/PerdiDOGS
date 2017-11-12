@@ -20,7 +20,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PerfilFragment extends Fragment {
+public class UserPerfil extends Fragment {
 
     ImageView imgperfil ;
     TextView infousermail,infousername;
@@ -30,7 +30,7 @@ public class PerfilFragment extends Fragment {
 
 
 
-    public PerfilFragment() {
+    public UserPerfil() {
         // Required empty public constructor
     }
 

@@ -133,7 +133,7 @@ public class NavyActivity extends AppCompatActivity
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_vehiculos, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         userImageView=(ImageView)findViewById(R.id.userImageView);
         userView=(TextView) findViewById(R.id.userView);
         correoView=(TextView) findViewById(R.id.correoView);
@@ -236,14 +236,14 @@ public class NavyActivity extends AppCompatActivity
         }
 
         else if (id == R.id.nav_manage) {
-            Swipefrag2 fragment =new Swipefrag2();
+            PetPerfil fragment =new PetPerfil();
             ft=fm.beginTransaction();
             ft.replace(R.id.maincontainer,fragment).commit();
 
 
         } else if (id == R.id.nav_share) {
 
-            PerfilFragment fragment =new PerfilFragment();
+            UserPerfil fragment =new UserPerfil();
             ft=fm.beginTransaction();
             ft.replace(R.id.maincontainer,fragment).commit();
 

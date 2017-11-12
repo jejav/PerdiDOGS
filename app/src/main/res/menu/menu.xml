@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/mmiPerfil"
-        android:title="@string/miperfil"/>
-    <item android:id="@+id/cerrar"
-        android:title="@string/cerrarsesion"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/cerrarsesion"
+        />
+    <item
+        android:id="@+id/crearuser"
+        android:orderInCategory="100"
+        android:title="@string/crearU"
+        />
 
 </menu>

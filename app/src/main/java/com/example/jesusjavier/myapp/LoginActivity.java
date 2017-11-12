@@ -188,10 +188,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(user!=null){
                     //IR a la Actividad principál aquí
                     //GoogleSignInAccount acct = result.getSignInAccount();
-                    nombreG=user.getDisplayName();
-                    correoG=user.getEmail();
-                    urlfotoG=user.getPhotoUrl().toString();
+//                    nombreG=user.getDisplayName();
+//                    correoG=user.getEmail();
+//                    urlfotoG=user.getPhotoUrl().toString();
                     optLog=3;
+                    Toast.makeText(LoginActivity.this, correoG, Toast.LENGTH_LONG).show();
                     goMainActivity();
                 }
 
@@ -271,6 +272,10 @@ public class LoginActivity extends AppCompatActivity {
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+
+            nombreG=acct.getDisplayName();
+            correoG=acct.getEmail();
+            urlfotoG=acct.getPhotoUrl().toString();
             Toast.makeText(getApplicationContext(),acct.getDisplayName(),Toast.LENGTH_SHORT).show();
             firebaseAuthWithGoogle(acct);
 

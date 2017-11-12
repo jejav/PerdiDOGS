@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Swipefrag2 extends Fragment {
+public class PetPerfil extends Fragment {
 
     FirebaseUser currentFirebaseUser;
     EditText petName,petRaza,petColor;
@@ -32,9 +32,9 @@ public class Swipefrag2 extends Fragment {
     DatabaseReference myRef;
     FirebaseDatabase database;
     String nombre,raza,color;
-    Animal animal;
+    Animal animal2;
 
-    public Swipefrag2() {
+    public PetPerfil() {
         // Required empty public constructor
     }
 
@@ -42,7 +42,7 @@ public class Swipefrag2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_swipefrag2, container, false);
+        View view = inflater.inflate(R.layout.fragment_pet_perfil, container, false);
         petName=(EditText)view.findViewById(R.id.petName);
         petRaza=(EditText)view.findViewById(R.id.petRaza);
         petColor=(EditText)view.findViewById(R.id.petColor);
@@ -88,17 +88,18 @@ public class Swipefrag2 extends Fragment {
         // Read from the database
         myRef=database.getReference("users");
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        animal=new Animal();
+        animal2=new Animal();
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child(currentFirebaseUser.getUid()).exists()){
-                  animal=dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Animal.class);
+                  animal2=dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Animal.class);
 
-                    petName.setText(animal.getNombre());
-                    petColor.setText(animal.getColor());
-                    petRaza.setText(animal.getRaza());
+                    petName.setText(animal2.getNombre());
+                    petColor.setText(animal2.getColor());
+                    petRaza.setText(animal2.getRaza());
 
                 }
 
