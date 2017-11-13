@@ -230,9 +230,10 @@ public class NavyActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_slideshow) {
-/*            Bottom_Fragment fragment =new Bottom_Fragment();
+            WatchFragment fragment =new WatchFragment();
             ft=fm.beginTransaction();
-            ft.replace(R.id.maincontainer,fragment).commit();*/
+            ft.replace(R.id.maincontainer,fragment).commit();
+
         }
 
         else if (id == R.id.nav_manage) {

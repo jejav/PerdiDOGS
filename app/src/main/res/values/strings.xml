@@ -45,5 +45,6 @@
     <string name="color">Color</string>
     <string name="perdidas">Pérdidas</string>
     <string name="crearU">Crear Usuario</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

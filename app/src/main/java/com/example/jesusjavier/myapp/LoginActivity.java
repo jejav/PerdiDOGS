@@ -49,7 +49,7 @@ import java.util.Arrays;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private String correoR,contraseñaR;
+    private String correoR;
     private LoginButton loginButton;
     CallbackManager callbackmanager;
     GoogleApiClient mGoogleApiClient;
@@ -58,10 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    String correoUser,passUser,correoCom,contraseñaCom;
+    String correoUser,passUser;
     String nombreG,correoG,urlfotoG,username,fotoUrl;
 
-    EditText eCorreo,eContrasena;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
@@ -192,7 +191,6 @@ public class LoginActivity extends AppCompatActivity {
 //                    correoG=user.getEmail();
 //                    urlfotoG=user.getPhotoUrl().toString();
                     optLog=3;
-                    Toast.makeText(LoginActivity.this, correoG, Toast.LENGTH_LONG).show();
                     goMainActivity();
                 }
 

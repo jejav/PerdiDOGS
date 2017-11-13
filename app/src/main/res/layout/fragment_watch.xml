@@ -6,9 +6,9 @@
 
     <!-- TODO: Update blank fragment layout -->
   <ImageView
-      android:src="@drawable/redcodigo"
+      android:id="@+id/codigoView"
       android:layout_gravity="center"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+      android:layout_width="300dp"
+      android:layout_height="300dp" />
 
 </FrameLayout>
