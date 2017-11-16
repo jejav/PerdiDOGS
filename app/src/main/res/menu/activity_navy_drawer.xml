@@ -9,11 +9,11 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/watch"
-            android:title="@string/verQr" />
+            android:title="@string/Escanear" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/qricon"
-            android:title="@string/generar" />
+            android:title="@string/verQr" />
 
     </group>
 

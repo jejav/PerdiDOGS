@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import net.glxn.qrgen.android.QRCode;
 
 
@@ -17,6 +22,9 @@ import net.glxn.qrgen.android.QRCode;
  */
 public class WatchFragment extends Fragment {
     Bitmap myBitmap;
+    FirebaseUser currentFirebaseUser;
+    DatabaseReference myRef;
+    FirebaseDatabase database;
 
 
     public WatchFragment() {
@@ -30,8 +38,12 @@ public class WatchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_watch, container, false);
         ImageView myImage=(ImageView) view.findViewById(R.id.codigoView);
-        myBitmap= QRCode.from("www.perdidogs.com").bitmap();
+        database=FirebaseDatabase.getInstance();
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        myBitmap= QRCode.from(currentFirebaseUser.getUid()).bitmap();
         myImage.setImageBitmap(myBitmap);
+
+
         return view;
     }
 

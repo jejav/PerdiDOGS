@@ -4,16 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -35,8 +26,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class NavyActivity extends AppCompatActivity
@@ -108,6 +102,9 @@ public class NavyActivity extends AppCompatActivity
 
         database=FirebaseDatabase.getInstance();
 
+        //crea al nuevo usuario
+        makeUser();
+
     }
 
     @Override
@@ -139,7 +136,11 @@ public class NavyActivity extends AppCompatActivity
         correoView=(TextView) findViewById(R.id.correoView);
         correoView.setText(usuario);
         userView.setText(correo);
-        loadImageFromUrl(fotoUrl);
+
+        if (fotoUrl!=""){
+            loadImageFromUrl(fotoUrl);
+        }
+
         return true;
     }
 
@@ -157,12 +158,9 @@ public class NavyActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             prefs=getSharedPreferences("datoscompartidos",MODE_PRIVATE);
             editor=prefs.edit();
@@ -198,15 +196,9 @@ public class NavyActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-
                 //return true;
-
         }
 
-        else if(id==R.id.crearuser){
-            makeUser();
-
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -224,9 +216,9 @@ public class NavyActivity extends AppCompatActivity
             ft.replace(R.id.maincontainer,fragment).commit();
 
         } else if (id == R.id.nav_gallery) {
-/*            Perfiles fragment2 =new Perfiles();
+            ScannerFragment fragment =new ScannerFragment();
             ft=fm.beginTransaction();
-            ft.replace(R.id.maincontainer,fragment2).commit();*/
+            ft.replace(R.id.maincontainer,fragment).commit();
 
 
         } else if (id == R.id.nav_slideshow) {
@@ -240,7 +232,6 @@ public class NavyActivity extends AppCompatActivity
             PetPerfil fragment =new PetPerfil();
             ft=fm.beginTransaction();
             ft.replace(R.id.maincontainer,fragment).commit();
-
 
         } else if (id == R.id.nav_share) {
 
@@ -260,14 +251,37 @@ public class NavyActivity extends AppCompatActivity
     }
 
     public void makeUser(){
+
+
+ /*       Animal animal=new Animal(R.drawable.logo,"Null","Null","Null",usuario,correo);
+        myRef=database.getReference("users").child(""+currentFirebaseUser.getUid());
+        myRef.setValue(animal);*/
+
+        myRef=database.getReference("users");
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Animal animal=new Animal(R.drawable.logo,"Null","Null","Null",usuario,correo);
-        myRef=database.getReference("users").child(""+currentFirebaseUser.getUid());
-        myRef.setValue(animal);
+       myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                if(dataSnapshot.child(currentFirebaseUser.getUid()).exists()){
+                    //si el usuario ya existe no se hace nada
 
+                }
+                else {
+                    Animal animal=new Animal(R.drawable.logo,"Null","Null","Null",usuario,correo);
+                    myRef=database.getReference("users").child(""+currentFirebaseUser.getUid());
+                    myRef.setValue(animal);
+                }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                // Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
     }
 }

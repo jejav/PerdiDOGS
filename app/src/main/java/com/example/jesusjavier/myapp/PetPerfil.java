@@ -95,7 +95,7 @@ public class PetPerfil extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child(currentFirebaseUser.getUid()).exists()){
-                  animal2=dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Animal.class);
+                    animal2=dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Animal.class);
 
                     petName.setText(animal2.getNombre());
                     petColor.setText(animal2.getColor());

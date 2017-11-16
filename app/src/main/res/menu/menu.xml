@@ -7,10 +7,6 @@
         android:orderInCategory="100"
         android:title="@string/cerrarsesion"
         />
-    <item
-        android:id="@+id/crearuser"
-        android:orderInCategory="100"
-        android:title="@string/crearU"
-        />
+
 
 </menu>
